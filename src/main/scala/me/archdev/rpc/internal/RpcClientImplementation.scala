@@ -23,7 +23,7 @@ private[rpc] class RpcClientImplementation(tcpConnection: OutgoingTcpConnection)
         rpcStream.offer(request).flatMap(queueOfferResultToResultFuture(_, promise))
     }
 
-  override def read[Result: Pickler](p: ByteBuffer) = Unpickle[Result].fromBytes(p)
+  override def read[Result: Pickler](p: ByteBuffer) = (Unpickle)[Result].fromBytes(p)
 
   override def write[Result: Pickler](r: Result) = Pickle.intoBytes(r)
 

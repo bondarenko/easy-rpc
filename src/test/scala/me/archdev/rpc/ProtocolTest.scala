@@ -1,11 +1,12 @@
 package me.archdev.rpc
 
+import me.archdev.rpc.protocol.{ExceptionIsThrownError, RpcRequest, RpcResponse}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
+
 import java.nio.ByteBuffer
 
-import me.archdev.rpc.protocol.{ExceptionIsThrownError, RpcRequest, RpcResponse}
-import org.scalatest.{Matchers, WordSpec}
-
-class ProtocolTest extends WordSpec with Matchers {
+class ProtocolTest extends AnyWordSpec with Matchers {
 
   "serialize and deserialize RPC request" in {
     val byteBuffer = ByteBuffer.allocate(1000)

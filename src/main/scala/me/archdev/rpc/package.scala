@@ -22,7 +22,7 @@ package object rpc extends DefaultBoopicklePicklers {
     extends ClientProxy[T, ByteBuffer, Pickler, Pickler](new RpcClientImplementation(Tcp().outgoingConnection(host, port))())
 
   object Router extends autowire.Server[ByteBuffer, Pickler, Pickler] {
-    override def read[R: Pickler](p: ByteBuffer) = Unpickle[R].fromBytes(p)
+    override def read[R: Pickler](p: ByteBuffer) = (Unpickle)[R].fromBytes(p)
     override def write[R: Pickler](r: R) = Pickle.intoBytes(r)
   }
 

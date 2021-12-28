@@ -19,7 +19,7 @@ trait AsyncRpcClientHelper {
 
   def formRPCRequest(path: Seq[String], args: Map[String, ByteBuffer]) = {
     val rpcRequest = RpcRequest(idCounter.getAndAdd(1), path, args)
-    val promise = Promise[ByteBuffer]
+    val promise = Promise[ByteBuffer]()
     promiseMapping.put(rpcRequest.id, promise)
 
     rpcRequest -> promise
@@ -46,6 +46,8 @@ trait AsyncRpcClientHelper {
       case e: InvalidMethodParametersError =>
         InvalidProtocolException(e.message)
       case e: MethodNotFoundError =>
+        InvalidProtocolException(e.message)
+      case e: ErrorIsOccurred =>
         InvalidProtocolException(e.message)
     }
 

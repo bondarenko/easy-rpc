@@ -4,12 +4,13 @@ import autowire._
 import me.archdev.rpc._
 import me.archdev.utils.{AkkaTest, TestService, TestServiceRouter}
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.{Matchers, WordSpecLike}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.Random
 
-class EasyRpcIT extends AkkaTest with WordSpecLike with Matchers with ScalaFutures {
+class EasyRpcIT extends AkkaTest with AnyWordSpecLike with Matchers with ScalaFutures {
 
   trait Context {
     val rpcHost = "localhost"

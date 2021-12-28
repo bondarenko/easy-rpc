@@ -47,7 +47,7 @@ object ExceptionIsThrownError {
     new ExceptionIsThrownError(
       throwable.getClass.getSimpleName,
       throwable.getMessage,
-      throwable.getStackTrace.map(_.toString)
+      throwable.getStackTrace.map(_.toString).toIndexedSeq
     )
 
 }
@@ -61,7 +61,7 @@ object ErrorIsOccurred {
     new ErrorIsOccurred(
       throwable.getClass.getSimpleName,
       throwable.getMessage,
-      throwable.getStackTrace.map(_.toString)
+      throwable.getStackTrace.map(_.toString).toIndexedSeq
     )
 
 }
@@ -72,7 +72,8 @@ object MethodNotFoundError {
     * Extracts class path and method that cannot be found from match error.
     */
   def apply(matchError: MatchError) = {
-    val path = matchError.getMessage().drop(15).takeWhile(_ != ')').split(",").map(_.trim)
+    val path = matchError.getMessage().replace("Request(List(","").takeWhile(_ != ')')
+      .split(",").map(_.trim)
     new MethodNotFoundError(path.dropRight(1).mkString("."), path.last)
   }
 
@@ -80,13 +81,13 @@ object MethodNotFoundError {
 
 object InvalidMethodParametersError {
 
-  /**
-    * Extracts field names from [[autowire.Error.InvalidInput]] list.
-    */
+  /*
+  * Extracts field names from [[autowire.Error.InvalidInput]] list.
+  */
   def apply(invalidInputEx: InvalidInput) =
     new InvalidMethodParametersError(invalidInputEx.exs.map {
       case Missing(p) => p
-      case Invalid(p, ex) => p
+      case Invalid(p, _) => p
     })
 
 }

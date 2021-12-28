@@ -1,16 +1,16 @@
 package me.archdev.rpc
 
-import java.nio.ByteBuffer
-
 import akka.stream.scaladsl.Tcp
 import me.archdev.rpc.internal.RpcClientImplementation
 import me.archdev.rpc.protocol._
 import me.archdev.utils.AkkaTest
-import org.scalatest.{Matchers, WordSpecLike}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 
+import java.nio.ByteBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class RpcClientImplementationTest extends AkkaTest with WordSpecLike with Matchers {
+class RpcClientImplementationTest extends AkkaTest with AnyWordSpecLike with Matchers {
 
   "Rpc client" should {
 

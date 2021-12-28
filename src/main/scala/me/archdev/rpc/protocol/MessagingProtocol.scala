@@ -14,7 +14,7 @@ import me.archdev.rpc._
 case class RpcRequest(id: Long, path: Seq[String], params: Map[String, ByteBuffer])
 object RpcRequest {
   def serialize(rpcRequest: RpcRequest): ByteBuffer = Pickle.intoBytes(rpcRequest)
-  def deserialize(serializedRequest: ByteBuffer): RpcRequest = Unpickle[RpcRequest].fromBytes(serializedRequest)
+  def deserialize(serializedRequest: ByteBuffer): RpcRequest = (Unpickle)[RpcRequest].fromBytes(serializedRequest)
 }
 
 /**
@@ -27,7 +27,7 @@ object RpcRequest {
 case class RpcResponse(id: Long, data: Option[ByteBuffer], error: Option[ErrorProtocol])
 object RpcResponse {
   def serialize(rpcResponse: RpcResponse): ByteBuffer = Pickle.intoBytes(rpcResponse)
-  def deserialize(byteBuffer: ByteBuffer): RpcResponse = Unpickle[RpcResponse].fromBytes(byteBuffer)
+  def deserialize(byteBuffer: ByteBuffer): RpcResponse = (Unpickle)[RpcResponse].fromBytes(byteBuffer)
 }
 object SuccessfulRpcResponse {
   def apply(id: Long, result: ByteBuffer) =

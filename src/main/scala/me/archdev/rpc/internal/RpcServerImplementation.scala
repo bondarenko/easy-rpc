@@ -49,12 +49,12 @@ private[rpc] class RpcServerImplementation(router: Router.Router, parallelism: I
       ExceptionIsThrownError(
         ex.getClass.getSimpleName,
         ex.getMessage,
-        ex.getStackTrace.map(_.toString)
+        ex.getStackTrace.map(_.toString).toIndexedSeq
       )
   }
 
   private def wireRpcRequest(router: Router.Router, r: RpcRequest) =
-    Future.successful()
+    Future.successful((): Unit)
       .flatMap(_ => router(autowire.Core.Request(r.path, r.params)))
       .map(result => SuccessfulRpcResponse(r.id, result))
       .recover(routerErrorHandler.andThen(FailedRpcResponse(r.id, _)))
